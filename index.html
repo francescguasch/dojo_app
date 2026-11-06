@@ -666,6 +666,7 @@ const P={
   check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
   left:'<path d="m14.5 5-7 7 7 7"/>',right:'<path d="m9.5 5 7 7-7 7"/>',
   plus:'<path d="M12 5v14M5 12h14"/>',
+  moon:'<path d="M19.5 14.6A7.8 7.8 0 1 1 9.4 4.5a6.3 6.3 0 0 0 10.1 10.1z"/><path d="M16 4.5v2M15 5.5h2M19.5 8.5v1.6M18.7 9.3h1.6"/>',
   star:'<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>'
 };
 const I=(n,cls)=>`<svg class="ico${cls?" "+cls:""}" viewBox="0 0 24 24" aria-hidden="true">${P[n]||""}</svg>`;
@@ -677,12 +678,12 @@ const R={study:20,train:12,tema:10,pages10:2,perfect:15,ach:25};
 const PEN={study:20,manana:5,pages:5,train:10};
 const HABITS=[
   {id:"manana",nm:"Rutina de mañana",ds:"Cama, estiramientos y skincare",pts:3,pen:PEN.manana,ic:"sunrise"},
-  {id:"movil",nm:"Móvil fuera a las 22:45",ds:"Cargando lejos de la cama",pts:5,ic:"phone"},
+  {id:"movil",nm:"Dormir 8 h",ds:"Anoche dormiste 8 h o más · mínimo 5 noches por semana",pts:5,ic:"moon"},
   {id:"social",nm:"Reto social",ds:"Pregunta de seguimiento, saludar por el nombre o contar algo tuyo",pts:5,ic:"talk"},
   {id:"video",nm:"Diario en cámara",ds:"1 o 2 min hablando a cámara",pts:5,lv:2,ic:"camera"},
   {id:"proyecto",nm:"Proyecto propio",ds:"30 min en un script o proyecto tuyo",pts:10,lv:5,ic:"brackets"}
 ];
-const LEVELS=[[0,"Novato","Empiezas aquí"],[1000,"Aprendiz","Trote del domingo y diario en cámara"],[2200,"Nak Muay","El móvil fuera pasa a ser obligatorio"],[4500,"Luchador","Collserola y sprints"],[7500,"Guerrero","Entreno de 2 h, estudio de muay thai y proyecto propio"],[10000,"Cámara","Aprendes a grabar"],[12500,"Montador","Aprendes a editar"],[15500,"Estreno","Se abre el canal de muay thai"],[19000,"Veterano","Guiones de ingeniería"],[23000,"Campeón local","Se abre el canal de ingeniería"],[28000,"Kru","Entreno de 3 h"],[34500,"Maestro",""],[43000,"Leyenda","4 h de estudio dan +40"]];
+const LEVELS=[[0,"Novato","Empiezas aquí"],[1000,"Aprendiz","Trote del domingo y diario en cámara"],[2200,"Nak Muay","Dormir 8 h, al menos 5 noches por semana"],[4500,"Luchador","Collserola y sprints"],[7500,"Guerrero","Entreno de 2 h, estudio de muay thai y proyecto propio"],[10000,"Cámara","Aprendes a grabar"],[12500,"Montador","Aprendes a editar"],[15500,"Estreno","Se abre el canal de muay thai"],[19000,"Veterano","Guiones de ingeniería"],[23000,"Campeón local","Se abre el canal de ingeniería"],[28000,"Kru","Entreno de 3 h"],[34500,"Maestro",""],[43000,"Leyenda","4 h de estudio dan +40"]];
 // para ascender: XP + prueba de nivel (cumplir ya lo del nivel siguiente) + un mínimo de días en el nivel
 const PROOF={days:14,win:21,weeks:3,stay:14};
 const BANDS=["#e9e4d8","#f2d34a","#e8892c","#3f9b5a","#2f63c9","#3a8fa3","#7a3fb5","#c4571c","#b07a3a","#c8252b","#5e5a52","#16161a","linear-gradient(90deg,#c8252b,#a8730f,#16161a)"];
@@ -729,7 +730,7 @@ const CH=[
  ["con_all","con","Los cinco asentados","allSettledDays","d",[[1,"P","Bosque entero","森"],[30,"O","Un mes de bosque","林"],[100,"L","Bosque centenario","杜"]]],
  ["con_resil","con","Siete caídas, ocho levantadas","comebacks","n",[[1,"B","Levantarse","起"],[10,"P","Diez veces","立"],[40,"O","Inquebrantable","不屈"]]],
  ["rut_man","rut","Rutina de mañana","hs_manana","d",[[7,"B","Semana de mañanas","晨"],[30,"P","Mes madrugador","暁"],[100,"O","Cien mañanas","曙"],[250,"L","El sol te espera","旭"]]],
- ["rut_mov","rut","Móvil fuera","hs_movil","d",[[7,"B","Semana desconectado","静"],[30,"P","Mes sin pantalla","夜"],[100,"O","Cien noches","眠"],[250,"L","Dueño de tus noches","夢"]]],
+ ["rut_mov","rut","Noches de 8 h seguidas","hs_movil","d",[[7,"B","Semana descansado","静"],[30,"P","Mes de buen sueño","夜"],[100,"O","Cien noches","眠"],[250,"L","Dueño de tus noches","夢"]]],
  ["rut_limp","rut","Limpieza a fondo","limpiezas","n",[[4,"B","Un mes de domingos","掃"],[20,"P","Cinco meses","箒"],[52,"O","Un año entero","整"],[100,"L","Cien domingos","禅"]]],
  ["rut_dom","rut","Domingo sin castigos","sundays","n",[[1,"B","Domingo redondo","日"],[10,"P","Diez domingos","休"],[30,"O","Treinta domingos","和"],[60,"L","Sesenta domingos","調"]]],
  ["rut_pelo","rut","Pelo cuidado","pelos","n",[[10,"B","Diez lavados","髪"],[50,"P","Cincuenta lavados","艶"],[120,"O","Un año de pelo","粋"]]],
@@ -800,7 +801,7 @@ const OBL={
 const LV_TXT=[
   "Estudio 30 min · entreno 1 h (lun–jue) · lectura 10 pág. · limpieza a fondo los domingos",
   "Estudio 45 min · trote suave el domingo · desbloquea el diario en cámara",
-  "Estudio 1 h · lectura 15 pág. · trote también el martes · el móvil fuera pasa a ser obligatorio",
+  "Estudio 1 h · lectura 15 pág. · trote también el martes · dormir 8 h al menos 5 noches por semana pasa a ser obligatorio",
   "Estudio 1 h 15 · el domingo, Collserola; el martes, sprints",
   "Estudio 1 h 30 · entreno 2 h · lectura 20 pág. · muay thai 20 min al día · movilidad el domingo · un guion de thai por semana · desbloquea el proyecto propio",
   "Grabar una práctica por semana: encuadre, luz, sonido y hablar a cámara. No se publica",
@@ -813,7 +814,7 @@ const LV_TXT=[
   "Todo lo anterior · 4 h de estudio en un día dan +40 de extra"];
 const MILES=[[7,30],[21,70],[50,150],[100,300]];
 const HKEYS=["study","pages","train","manana","movil"];
-const HNAME={study:"Estudio",pages:"Lectura",train:"Entreno",manana:"Rutina de mañana",movil:"Móvil fuera"};
+const HNAME={study:"Estudio",pages:"Lectura",train:"Entreno",manana:"Rutina de mañana",movil:"Dormir 8 h"};
 const HAIR0="2026-11-05";
 const daysBetween=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
 const runDays=li=>li>=10?[6,0,1,2,3]:li>=7?[0,1,2]:li>=2?[0,2]:li>=1?[0]:[];
@@ -844,7 +845,6 @@ function missingFor(raw,k,j){const d=norm(raw),m=[];
   if(isTrainDay(k)&&d.trainMin<OBL.minTrain[j])m.push("entreno "+fmtMin(OBL.minTrain[j]));
   if(d.pages<OBL.minPages[j])m.push(OBL.minPages[j]+" pág.");
   if(!d.manana)m.push("rutina de mañana");
-  if(OBL.movil[j]&&!d.movil)m.push("móvil fuera");
   extrasFor(k,j).forEach(e=>{if(e.pen&&!d[e.id])m.push(e.nm.toLowerCase())});
   return m}
 const meetsDay=(raw,k,j)=>!!raw&&!missingFor(raw,k,j).length;
@@ -865,7 +865,7 @@ function compute(){
     maxPerfectRun:0,maxCleanRun:0,comebacks:0,maxSettled:0,allSettledDays:0,levelMax:1,bestDay:0,maxWeekStudy:0,maxWeekPages:0,maxWeekNet:0};
   HKEYS.forEach(h=>stats["hs_"+h]=0);WIDS.forEach(w=>stats[w]=0);
   const hist={},hstreak={};HKEYS.forEach(h=>{hist[h]=[];hstreak[h]=0});
-  let streak=0,sum=0,dayN=0,wk={},reached=0,since=1,pRun=0,cRun=0,socRun=0,prevPen=false,wS=0,wP=0,wN=0,wT=0;
+  let streak=0,sum=0,dayN=0,wk={},reached=0,since=1,wSl=0,pRun=0,cRun=0,socRun=0,prevPen=false,wS=0,wP=0,wN=0,wT=0;
   const achAt={},weeks=[];
   const buyList=Object.values(buys).filter(b=>b.at).map(b=>Object.assign({k:key(new Date(b.at))},b)).sort((a,b)=>a.k<b.k?-1:a.k>b.k?1:0);let bi=0;
   const onceList=Object.values(missions).filter(m=>m.tipo==="unica"&&m.done).map(m=>({pts:+m.pts||0,k:m.doneAt&&m.doneAt>=START&&m.doneAt<=todayKey?m.doneAt:todayKey}));
@@ -876,7 +876,7 @@ function compute(){
     const st={};
     HKEYS.forEach(h=>{const H=hist[h].slice(-14);const n=H.length,c=H.filter(Boolean).length;st[h]={settled:n>=10&&c/n>=.85}});
     const setNow=HKEYS.filter(h=>st[h].settled).length,dow=parse(k).getDay();
-    if(dow===1){if(dayN>1)weeks.push(wk);wk={};wS=0;wP=0;wN=0;wT=0}
+    if(dow===1){if(dayN>1)weeks.push(wk);wk={};wS=0;wP=0;wN=0;wT=0;wSl=0}
     // ascenso al empezar el día, con lo hecho hasta ayer
     if(reached+1<LEVELS.length&&proofOf(reached+1,k,false,weeks,wk,dayN-since,sum).ok){reached++;since=dayN}
     const li=Math.min(reached,lvXP(sum));
@@ -918,7 +918,8 @@ function compute(){
     if(!done.manana)pens.push(["Rutina de mañana",OBL.manana[li]*x2("manana")]);
     if(!done.pages)pens.push(["Lectura (mín. "+minP+" pág.)",OBL.pages[li]*x2("pages")]);
     if(trainReq&&!done.train)pens.push(["Entreno (mín. "+fmtMin(minT)+")",OBL.train[li]*x2("train")]);
-    if(OBL.movil[li]&&!done.movil)pens.push(["Móvil fuera",OBL.movil[li]*x2("movil")]);
+    if(d.movil)wSl++;
+    if(dow===0&&OBL.movil[li]&&wSl<5)pens.push(["Dormir 8 h ("+wSl+" de 5 noches esta semana)",OBL.movil[li]*3]);
     extras.forEach(e=>{if(e.pen&&!d[e.id])pens.push([e.nm,e.pen])});
     if(dow===0)W.forEach(w=>{if((wk[w.id]||0)<w.target)pens.push([w.nm+" (semana)",w.pen])});
     const applies=k>=PEN_START&&k<todayKey;
