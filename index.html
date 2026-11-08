@@ -883,7 +883,8 @@ function compute(){
     HKEYS.forEach(h=>st[h].f=st[h].settled?.5:1+.08*li);
     const minS=OBL.minStudy[li],minT=OBL.minTrain[li],minP=OBL.minPages[li],trainReq=isTrainDay(k);
     const done={study:d.studyMin>=minS,pages:d.pages>=minP,train:trainReq?d.trainMin>=minT:null,manana:!!d.manana,movil:!!d.movil};
-    streak=done.study?streak+1:(k===todayKey?streak:0);
+    const exc=!!d.excusa; // día de fuerza mayor: ni resta ni rompe rachas, tampoco suma a la prueba
+    streak=done.study?streak+1:(k===todayKey||exc?streak:0);
     if(done.study)stats.maxStreak=Math.max(stats.maxStreak,streak);
     const mult=multFor(streak);
     // el multiplicador de racha solo impulsa lo que aún no es hábito; lo asentado vale la mitad y se premia con constancia
@@ -922,11 +923,12 @@ function compute(){
     if(dow===0&&OBL.movil[li]&&wSl<5)pens.push(["Dormir 8 h ("+wSl+" de 5 noches esta semana)",OBL.movil[li]*3]);
     extras.forEach(e=>{if(e.pen&&!d[e.id])pens.push([e.nm,e.pen])});
     if(dow===0)W.forEach(w=>{if((wk[w.id]||0)<w.target)pens.push([w.nm+" (semana)",w.pen])});
+    if(exc)pens.length=0;
     const applies=k>=PEN_START&&k<todayKey;
     const pen=applies?pens.reduce((s,p)=>s+p[1],0):0;
     const net=gain+bonus-pen;
     sum+=net;
-    HKEYS.forEach(h=>{if(done[h]===null)return;hist[h].push(done[h]);hstreak[h]=done[h]?hstreak[h]+1:(k===todayKey?hstreak[h]:0)});
+    HKEYS.forEach(h=>{if(done[h]===null||(exc&&!done[h]))return;hist[h].push(done[h]);hstreak[h]=done[h]?hstreak[h]+1:(k===todayKey?hstreak[h]:0)});
     // estadísticas para los logros
     stats.studyH+=d.studyMin/60;stats.trainH+=d.trainMin/60;stats.pages+=d.pages;stats.temas+=d.temas;
     stats.maxStudyDay=Math.max(stats.maxStudyDay,d.studyMin);stats.maxTrainDay=Math.max(stats.maxTrainDay,d.trainMin);stats.maxPagesDay=Math.max(stats.maxPagesDay,d.pages);
@@ -935,14 +937,14 @@ function compute(){
     if(done.train){wT++;if(wT===4)stats.trainWeeks++}
     extras.concat(pext).forEach(e=>{if(!d[e.id])return;if(e.id==="correr")stats.runs++;else if(e.id==="limpieza")stats.limpiezas++;else if(e.id==="movilidad")stats.movilidades++;else if(e.id==="pelo")stats.pelos++;else if(e.id==="thai")stats.thaiDays++});
     stats.guiones=stats.yt_guion+stats.yt_guion_ing;stats.publicados=stats.yt_pub+stats.yt_pub_ing;
-    if(d.social){socRun++;stats.socials++}else if(k!==todayKey)socRun=0;stats.hs_social=Math.max(stats.hs_social,socRun);
+    if(d.social){socRun++;stats.socials++}else if(k!==todayKey&&!exc)socRun=0;stats.hs_social=Math.max(stats.hs_social,socRun);
     if(d.video)stats.videos++;if(d.proyecto)stats.proyectos++;
-    pRun=perfect?pRun+1:(k===todayKey?pRun:0);stats.maxPerfectRun=Math.max(stats.maxPerfectRun,pRun);
-    const clean=!!raw&&pens.length===0;
-    cRun=clean?cRun+1:(k===todayKey?cRun:0);stats.maxCleanRun=Math.max(stats.maxCleanRun,cRun);
+    pRun=perfect?pRun+1:(k===todayKey||exc?pRun:0);stats.maxPerfectRun=Math.max(stats.maxPerfectRun,pRun);
+    const clean=!!raw&&pens.length===0&&!exc;
+    cRun=clean?cRun+1:(k===todayKey||exc?cRun:0);stats.maxCleanRun=Math.max(stats.maxCleanRun,cRun);
     if(clean&&prevPen)stats.comebacks++;
     if(clean&&dow===0)stats.sundays++;
-    prevPen=applies&&pen>0;
+    if(!exc)prevPen=applies&&pen>0;
     stats.maxSettled=Math.max(stats.maxSettled,setNow);if(setNow===HKEYS.length)stats.allSettledDays++;stats.levelMax=Math.max(stats.levelMax,li+1);
     // récords: lo ganado con tus actos ese día, sin contar los bonus de constancia
     const score=gain+(perfect?R.perfect:0)+legend-pen;stats.bestDay=Math.max(stats.bestDay,score);
@@ -1071,6 +1073,8 @@ function viewHoy(T){
       <div class="cmain"><div class="bignum"><b>${fmtDec(d.temas)}</b><span>temas hoy</span></div>
       <div class="cside"><div class="pts"><b>+${r.g.temas}</b>pts</div><div class="steps">${stepBtns("temas",[-.5,.5])}</div></div></div></div>
 
+    <div class="sec"><h2>Imprevistos</h2><small>Solo si de verdad no puedes</small></div>
+    <div class="tiles">${tile({id:"excusa",nm:"Día de fuerza mayor",ds:"Urgencia, enfermedad o algo que no depende de ti. Hoy no resta ni rompe rachas, pero tampoco cuenta para la prueba. Sé honesto contigo.",ic:"seal"},"c-proof")}</div>
     <div class="sec"><h2>Misiones</h2><small>${dm.length+cm.length} hoy</small></div>
     ${dm.join("")}${cm.join("")}
     ${um.length?`<div class="sec"><h2>Retos únicos</h2><small>Premio grande</small></div>${um.join("")}`:""}
@@ -1188,7 +1192,7 @@ function viewHist(T){
     let nodes="";for(let yy=y+14;yy<y+h-4;yy+=14)nodes+=`<line class="node" x1="${x.toFixed(1)}" x2="${(x+w).toFixed(1)}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}"/>`;
     return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1.5,h).toFixed(1)}" rx="5" fill="${v>=0?"var(--jade)":"var(--sun)"}"><title>${v} pts</title></rect>${nodes}${v?`<text x="${(x+w/2).toFixed(1)}" y="${(v>=0?y-4:y+h+12).toFixed(1)}" text-anchor="middle">${v}</text>`:""}<text x="${(x+w/2).toFixed(1)}" y="${H-8}" text-anchor="middle">${DAYS[dt.getDay()][0].toUpperCase()}</text>`}).join("");
   const rows=ks.slice().reverse().map(k=>{const r=T.days[k],dt=parse(k);
-    const sub=[r.d.studyMin>=30?fmtMin(r.d.studyMin)+" de estudio":"Sin el mínimo de estudio",r.pen?"castigo −"+r.pen:"",r.perfect?"día perfecto":"",r.medals.length?r.medals.length+(r.medals.length>1?" medallas":" medalla")+" +"+r.medXP+" XP":""].filter(Boolean).join(" · ");
+    const sub=[r.d.studyMin>=30?fmtMin(r.d.studyMin)+" de estudio":"Sin el mínimo de estudio",r.d.excusa?"fuerza mayor":"",r.pen?"castigo −"+r.pen:"",r.perfect?"día perfecto":"",r.medals.length?r.medals.length+(r.medals.length>1?" medallas":" medalla")+" +"+r.medXP+" XP":""].filter(Boolean).join(" · ");
     return `<div class="row"><div><div class="rt">${k===todayKey?"Hoy":DAYS[dt.getDay()][0].toUpperCase()+DAYS[dt.getDay()].slice(1)+" "+dt.getDate()}</div><div class="rs">${sub}</div></div><div class="rv${r.net<0?" neg":""}">${r.net>0?"+":""}${r.net}</div></div>`}).join("");
   const bl=Object.entries(buys).sort((a,b)=>String(b[1].at).localeCompare(String(a[1].at)));
   const brows=bl.length?bl.slice(0,20).map(([id,b],i)=>{const dt=new Date(b.at);return `<div class="row"><div><div class="rt">${esc(b.nm)}</div><div class="rs">${dt.getDate()}/${dt.getMonth()+1}</div>${i===0?`<button type="button" class="linkbtn" style="margin-top:8px" data-act="undo" data-id="${esc(id)}" id="undo">Deshacer</button>`:""}</div><div class="rv neg">−${+b.c||0}</div></div>`}).join(""):'<div class="empty">Todavía no has canjeado nada.</div>';
