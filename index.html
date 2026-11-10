@@ -683,7 +683,7 @@ const HABITS=[
   {id:"video",nm:"Diario en cámara",ds:"1 o 2 min hablando a cámara",pts:5,lv:2,ic:"camera"},
   {id:"proyecto",nm:"Proyecto propio",ds:"30 min en un script o proyecto tuyo",pts:10,lv:5,ic:"brackets"}
 ];
-const LEVELS=[[0,"Novato","Empiezas aquí"],[1000,"Aprendiz","Trote del domingo y diario en cámara"],[2200,"Nak Muay","Dormir 8 h, al menos 5 noches por semana"],[4500,"Luchador","Collserola y sprints"],[7500,"Guerrero","Entreno de 2 h, estudio de muay thai y proyecto propio"],[10000,"Cámara","Aprendes a grabar"],[12500,"Montador","Aprendes a editar"],[15500,"Estreno","Se abre el canal de muay thai"],[19000,"Veterano","Guiones de ingeniería"],[23000,"Campeón local","Se abre el canal de ingeniería"],[28000,"Kru","Entreno de 3 h"],[34500,"Maestro",""],[43000,"Leyenda","4 h de estudio dan +40"]];
+const LEVELS=[[0,"Novato","Empiezas aquí"],[1000,"Aprendiz","Trote del domingo y diario en cámara"],[2200,"Nak Muay","Dormir 8 h, al menos 5 noches por semana"],[4500,"Luchador","Collserola y sprints"],[7500,"Guerrero","Entreno de 2 h, estudio de muay thai y proyecto propio"],[10000,"Cámara","Aprendes a grabar"],[12500,"Montador","Aprendes a editar"],[15500,"Estreno","Se abre el Instagram de muay thai"],[19000,"Veterano","Guiones de ingeniería"],[23000,"Campeón local","Se abre el canal de ingeniería"],[28000,"Kru","Entreno de 3 h"],[34500,"Maestro",""],[43000,"Leyenda","4 h de estudio dan +40"]];
 // para ascender: XP + prueba de nivel (cumplir ya lo del nivel siguiente) + un mínimo de días en el nivel
 const PROOF={days:14,win:21,weeks:3,stay:14};
 const BANDS=["#e9e4d8","#f2d34a","#e8892c","#3f9b5a","#2f63c9","#3a8fa3","#7a3fb5","#c4571c","#b07a3a","#c8252b","#5e5a52","#16161a","linear-gradient(90deg,#c8252b,#a8730f,#16161a)"];
@@ -742,7 +742,7 @@ const CH=[
  ["can_idea","can","Guiones","guiones","n",[[1,"B","Primer guion","案"],[10,"P","Diez guiones","策"],[40,"O","Cuarenta guiones","構"],[100,"L","Cien guiones","稿"]]],
  ["can_grab","can","Prácticas grabadas","yt_grab","n",[[1,"B","Primera toma","録"],[4,"P","Cuatro tomas","撮"],[8,"O","Ojo de cámara","影"]]],
  ["can_edit","can","Prácticas editadas","yt_edit","n",[[1,"B","Primer corte","切"],[4,"P","Ritmo propio","編"]]],
- ["can_pub","can","Vídeos publicados","publicados","n",[[1,"P","Primer vídeo publicado","公"],[10,"O","Diez publicados","放"],[50,"L","Canal en marcha","星"]]],
+ ["can_pub","can","Publicaciones","publicados","n",[[1,"P","Primera publicación","公"],[25,"O","Veinticinco publicaciones","放"],[100,"L","Cien publicaciones","星"]]],
  ["mis_n","mis","Misiones completadas","missions","n",[[10,"B","Cazador","狩"],[50,"P","Rastreador","追"],[200,"O","Mercenario","傭"],[500,"L","Ronin","浪"]]],
  ["mis_dob","mis","Dobletes","doubles","n",[[1,"B","Las dos del día","双"],[20,"P","Veinte dobletes","両"],[80,"O","Ochenta dobletes","対"]]],
  ["mis_uni","mis","Misiones únicas","onceDone","n",[[1,"B","Primera hazaña","印"],[10,"P","Diez hazañas","功"],[30,"O","Leyenda viva","偉"]]],
@@ -803,10 +803,10 @@ const LV_TXT=[
   "Estudio 45 min · trote suave el domingo · desbloquea el diario en cámara",
   "Estudio 1 h · lectura 15 pág. · trote también el martes · dormir 8 h al menos 5 noches por semana pasa a ser obligatorio",
   "Estudio 1 h 15 · el domingo, Collserola; el martes, sprints",
-  "Estudio 1 h 30 · entreno 2 h · lectura 20 pág. · muay thai 20 min al día · movilidad el domingo · un guion de thai por semana · desbloquea el proyecto propio",
+  "Estudio 1 h 30 · entreno 2 h · lectura 20 pág. · muay thai 20 min al día · movilidad el domingo · una idea de reel de thai por semana · desbloquea el proyecto propio",
   "Grabar una práctica por semana: encuadre, luz, sonido y hablar a cámara. No se publica",
-  "Estudio 1 h 45 · muay thai 30 min · editar la práctica cada semana: cortes, ritmo y subtítulos",
-  "Lectura 25 pág. · correr también el lunes · publicar un vídeo de muay thai por semana, con miniatura y título trabajados",
+  "Estudio 1 h 45 · muay thai 30 min · editar la práctica cada semana: cortes, ritmo y subtítulos, en formato vertical",
+  "Lectura 25 pág. · correr también el lunes · publicar 2 reels de muay thai por semana en Instagram",
   "Estudio 2 h · un guion de ingeniería por semana",
   "Publicar también un vídeo de ingeniería por semana: dos vídeos en total",
   "Entreno 3 h · lectura 30 pág. · muay thai 45 min · correr de sábado a miércoles",
@@ -830,10 +830,10 @@ function extrasFor(k,li){
 }
 function weeklyFor(li){
   const w=[];
-  if(li>=4)w.push({id:"yt_guion",nm:"Guion de muay thai",ds:"Sale de lo que has estudiado esa semana",target:1,pts:20,pen:15,ic:"seal"});
+  if(li>=4)w.push({id:"yt_guion",nm:"Idea de reel de muay thai",ds:"Guion corto: gancho, técnica y cierre. Sale de lo que has estudiado esa semana",target:1,pts:20,pen:15,ic:"seal"});
   if(li===5||li===6)w.push({id:"yt_grab",nm:"Grabar una práctica",ds:"Encuadre, luz, sonido y hablar a cámara. No se publica",target:1,pts:25,pen:15,ic:"camera"});
   if(li===6)w.push({id:"yt_edit",nm:"Editar la práctica",ds:"Cortes, ritmo y subtítulos",target:1,pts:30,pen:15,ic:"scissors"});
-  if(li>=7)w.push({id:"yt_pub",nm:"Publicar vídeo de muay thai",ds:"Con miniatura y título trabajados",target:1,pts:60,pen:30,ic:"film"});
+  if(li>=7)w.push({id:"yt_pub",nm:"Publicar reel de muay thai",ds:"En Instagram: vertical, subtítulos y gancho en los primeros 2 segundos",target:2,pts:30,pen:30,ic:"film"});
   if(li>=8)w.push({id:"yt_guion_ing",nm:"Guion de ingeniería",ds:"Un tema que domines, contado a tu manera",target:1,pts:20,pen:15,ic:"code"});
   if(li>=9)w.push({id:"yt_pub_ing",nm:"Publicar vídeo de ingeniería",ds:"Con miniatura y título trabajados",target:1,pts:60,pen:30,ic:"film"});
   return w;
