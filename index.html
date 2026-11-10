@@ -1040,7 +1040,10 @@ function viewHoy(T){
   const habits=HABITS.filter(h=>!h.lv||T.li+1>=h.lv).map(h=>`<button type="button" class="tile c-habit${d[h.id]?" on":""}" data-act="tog" data-f="${h.id}" id="h_${h.id}" aria-pressed="${!!d[h.id]}"><span class="ck">${I("check")}</span><div class="badge c-habit">${I(h.ic)}</div><div><div class="tn">${esc(h.nm)}</div><div class="td">${esc(h.ds)}</div></div><div class="tp">+${h.pts}${h.pen?` <span class="pen">· −${h.pen} si no</span>`:""}</div></button>`).join("");
   const dm=dailyMissions(current).map(([id,nm,p])=>misCard(id,nm,p,"Misión del día",!!d.mis[id],"mis",false,"target"));
   const cm=Object.entries(missions).filter(([,m])=>m.tipo==="diaria").map(([id,m])=>misCard(id,m.nm,m.pts,"Tu misión diaria",!!d.mis[id],"mis",true,"seal"));
-  const um=isToday?Object.entries(missions).filter(([,m])=>m.tipo==="unica").sort((a,b)=>(a[1].done?1:0)-(b[1].done?1:0)).map(([id,m])=>misCard(id,m.nm,m.pts,m.done?"Completada":"Misión única",!!m.done,"unica",true,"star")):[];
+  // retos únicos: los 3 siguientes pendientes, en orden de ruta, y los que se completaron hoy
+  const uAll=Object.entries(missions).filter(([,m])=>m.tipo==="unica"),uPend=uAll.filter(([,m])=>!m.done),uDone=uAll.filter(([,m])=>m.done);
+  const um=isToday?uAll.filter(([,m])=>m.done&&m.doneAt===todayKey).concat(uPend.slice(0,3)).map(([id,m])=>misCard(id,m.nm,m.pts,m.done?"Completada":"Misión única",!!m.done,"unica",true,"star")):[];
+  const umMore=uPend.length>3?`<p class="hint">Y ${uPend.length-3} más en tu ruta · ${uDone.length} completados</p>`:"";
   return `<section class="view">
     <div class="daynav"><button type="button" data-act="prev" id="prev" aria-label="Día anterior" ${current<=START?"disabled":""}>${I("left")}</button>
       <div><h2>${title}</h2><div class="sub">${DAYS[dt.getDay()]} ${dt.getDate()} de ${MONTHS[dt.getMonth()]}</div></div>
@@ -1077,7 +1080,7 @@ function viewHoy(T){
     <div class="tiles">${tile({id:"excusa",nm:"Día de fuerza mayor",ds:"Urgencia, enfermedad o algo que no depende de ti. Hoy no resta ni rompe rachas, pero tampoco cuenta para la prueba. Sé honesto contigo.",ic:"seal"},"c-proof")}</div>
     <div class="sec"><h2>Misiones</h2><small>${dm.length+cm.length} hoy</small></div>
     ${dm.join("")}${cm.join("")}
-    ${um.length?`<div class="sec"><h2>Retos únicos</h2><small>Premio grande</small></div>${um.join("")}`:""}
+    ${um.length?`<div class="sec"><h2>Retos únicos</h2><small>Premio grande</small></div>${um.join("")}${umMore}`:""}
     <details class="addbox" id="addmis"><summary>${I("plus")} Crear una misión</summary>
       <form class="form" id="fmis"><input id="mnm" class="full" required maxlength="90" placeholder="Ej.: Terminar el curso de Linux">
       <select id="mtipo" aria-label="Tipo de misión"><option value="unica">Única (una vez)</option><option value="diaria">Diaria (cada día)</option></select>
@@ -1380,6 +1383,18 @@ try{const x=JSON.parse(localStorage.getItem(STORE)||"null");if(x&&x.dias)store=x
 function saveStore(){try{localStorage.setItem(STORE,JSON.stringify(store));return true}catch(e){setStatus("El móvil no deja guardar datos. Libera espacio.",true);return false}}
 if(!store){store=clone(SEED);saveStore()}
 ["dias","misiones","tienda","compras"].forEach(c=>{store[c]=store[c]||{}});
+// ruta de cursos: se añade una sola vez, sin pisar lo que ya exista
+store.flags=store.flags||{};
+if(!store.flags.ruta1){
+  const R1=[["r_ccst","Terminar el curso CCST Cybersecurity (120 h)",450],["r_ccst_ex","Aprobar la certificación CCST Cybersecurity",300],
+    ["r_linux","Terminar Fundamentos de Linux (70 h)",260],["r_inf201","Terminar INF-201: Bases de datos (40 h)",150],
+    ["r_py1","Python avanzado 1/5: POO avanzada (42 h)",160],["r_py2","Python avanzado 2/5: buenas prácticas (10 h)",40],
+    ["r_hack","Terminar Cisco Ethical Hacker (70 h)",260],["r_py4","Python avanzado 4/5: APIs RESTful (21 h)",80],
+    ["r_py5","Python avanzado 5/5: archivos y SQLite (21 h)",80],["r_en1","English for IT Basics: B1 (65 h)",240],
+    ["r_en2","English for IT Intermediate 1: B1+ (50 h)",190],["r_en3","English for IT Intermediate 2: B2 (50 h)",190]];
+  const t0=Date.now();R1.forEach(([id,nm,pts],i)=>{if(!store.misiones[id])store.misiones[id]={createdAt:new Date(t0+i).toISOString(),done:false,doneAt:null,nm,pts,tipo:"unica"}});
+  store.flags.ruta1=true;saveStore();
+}
 const localDB={
   doc:path=>{const[c,id]=path.split("/");return{
     set:async data=>{store[c][id]=clone(data);if(!saveStore())throw new Error("save")},
