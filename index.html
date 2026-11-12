@@ -528,6 +528,84 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .anb.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .anstrip{position:relative;z-index:1;display:flex;align-items:flex-end;gap:4px;height:46px}
 .anstrip i{flex:1;border-radius:3px 3px 1px 1px}
+/* ===== rediseño limpio: menos texto, filas en vez de tarjetas ===== */
+.hero{min-height:0!important;padding-bottom:16px!important;gap:0}
+.hero .kicker{display:none}
+.hero h1{font-size:clamp(40px,11vw,60px)}
+.sunwrap{width:84px;height:84px}.sunwrap .ring{width:100%;height:100%}
+.hero .stats{gap:8px;margin-top:12px}
+.hero .stat{flex-direction:row;align-items:center;gap:8px;padding:9px 12px;border-radius:12px}
+.hero .stat .top{display:none}
+.hero .stat .v{font-size:26px}
+.hero .stat .l{font-size:10.5px;letter-spacing:.06em;line-height:1.15;overflow:visible;text-overflow:clip}
+.hero .stat .v{font-size:24px}
+.xpmeta>span:first-child{display:none}.xpmeta{justify-content:flex-end}
+.themebtn{font-size:0;gap:0;padding:9px}.themebtn .ico{width:20px;height:20px}
+.xpmeta{font-size:12.5px;text-transform:none;letter-spacing:0;font-weight:600}
+.status{display:none}.status.err{display:block;margin:0}
+.view{gap:14px}
+.sec{margin-top:10px}.sec h2{font-size:24px;letter-spacing:.02em}.sec small{font-size:11px}
+.daynav{grid-template-columns:44px 1fr 44px}
+.daynav button{height:44px;border-radius:12px;box-shadow:none}
+.daynav h2{font-size:30px}.daynav .sub{font-size:11.5px}
+.balance{padding:16px 20px;border-radius:18px;gap:8px;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.balance .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;font-weight:700}
+.balance .big{font-size:54px;line-height:.9}
+.balance .pills{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.balance::after{display:none}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.mrow{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.mrow+.mrow,.chk+.chk,.glab+.chk,.chk+.glab,.mrow+.glab{border-top:1px solid var(--line)}
+.mhead{display:flex;align-items:center;gap:10px;min-width:0}
+.mic{flex:none;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c)}
+.mic .ico{width:18px;height:18px}
+.mname{font-family:var(--display);font-weight:600;font-size:22px;text-transform:uppercase;line-height:1;padding-top:2px}
+.mval{margin-left:auto;font-size:13.5px;color:var(--muted);white-space:nowrap}
+.mval b{font-family:var(--num);font-weight:500;font-size:22px;color:var(--ink)}
+.mpts{font-family:var(--num);font-size:20px;color:var(--jade);min-width:44px;text-align:right;white-space:nowrap}
+.mpts .mult{font-size:12px;margin-left:3px}
+.mbar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden}
+.mbar i{display:block;height:100%;border-radius:3px;background:var(--c);transition:width .5s var(--ease)}
+.mrow.ok .mbar i{background:var(--jade)}
+.mrow.due .mval b{color:var(--sun)}
+.mbtns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.mbtns .st,.mbtns .pages-in{min-width:0;width:100%;height:40px;font-size:19px;border-radius:10px;border:1px solid var(--line2);border-bottom-width:1px;padding:3px 4px 0;background:var(--surface2);color:var(--ink);box-shadow:none;text-align:center}
+.mbtns .st.plus{background:color-mix(in srgb,var(--c) 12%,var(--surface));border-color:color-mix(in srgb,var(--c) 35%,var(--line));color:var(--c)}
+.mbtns .st:active{transform:scale(.94)}
+.glab{padding:10px 16px 6px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--surface2)}
+.chk{appearance:none;border:0;background:none;font:inherit;color:inherit;text-align:left;width:100%;display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:52px;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative}
+.chk:active{background:var(--surface2)}
+.cbox{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;color:transparent;transition:background .2s,border-color .2s,transform .2s var(--spring)}
+.cbox .ico{width:16px;height:16px;stroke-width:3}
+.chk.req .cbox{border-color:color-mix(in srgb,var(--sun) 55%,var(--line2))}
+.chk.on .cbox{background:var(--jade);border-color:var(--jade);color:#fff;transform:scale(1.06)}
+.cn{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.cn b{font-size:15.5px;font-weight:600;line-height:1.25}
+.cn small{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chk.on .cn b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line2)}
+.ctag{flex:none;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7a3fb5;background:color-mix(in srgb,#7a3fb5 12%,var(--surface));padding:3px 7px;border-radius:6px}
+.cp{flex:none;font-family:var(--num);font-size:19px;color:var(--jade);min-width:38px;text-align:right}
+.chk.on .cp{color:var(--muted)}
+.cdel{appearance:none;border:0;background:none;color:var(--dim);font-size:22px;line-height:1;width:32px;height:32px;border-radius:8px;cursor:pointer;flex:none}
+.cdel:active{background:var(--surface2)}
+.more{padding:10px 16px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line)}
+.fold{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:52px}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary>.ico{width:18px;height:18px;color:var(--dim);transition:transform .2s;flex:none}
+.fold[open]>summary>.ico{transform:rotate(90deg)}
+.foldb{padding:4px 16px 16px;display:flex;flex-direction:column;gap:14px}
+.foldb .hint{font-size:13.5px;line-height:1.55}
+.fold .prtoday{padding-top:12px}
+.animo{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.animo .ah{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.animo .ah b{font-family:var(--display);font-weight:600;font-size:22px;text-transform:uppercase;line-height:1}
+.animo .ah span{font-size:12.5px;color:var(--muted)}
+.animo .anrow{gap:4px}.animo .anb{height:38px;font-size:18px;border-radius:9px}
+.animo .anstrip{height:26px}
+.addbox{padding:14px 16px;border-radius:18px}.addbox summary{font-size:19px}
+.path .lv .oblig{font-size:13px}
+.linkrow{appearance:none;border:1px dashed var(--line2);background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:600;padding:12px;border-radius:14px;cursor:pointer;width:100%}
 /* ===== historial con carácter ===== */
 .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (min-width:520px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -614,7 +692,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="stats">
       <div class="stat c-coin" id="coinchip"><div class="top" id="i-coin"></div><div class="v" id="coins">0</div><div class="l">Monedas</div></div>
       <div class="stat c-train"><div class="top" id="i-streak"></div><div class="v" id="streak">0</div><div class="l" id="multl">Racha · x1</div></div>
-      <div class="stat c-read"><div class="top" id="i-xp"></div><div class="v" id="xp">0</div><div class="l">XP total</div></div>
+      <div class="stat c-read"><div class="top" id="i-xp"></div><div class="v" id="xp">0</div><div class="l">XP</div></div>
     </div>
   </header>
   <div class="status" id="status" role="status">Conectando…</div>
@@ -790,7 +868,7 @@ const reduced=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ================= estado =================
 const todayKey=key(new Date());
-let achCat="next",achSel=null;
+let achCat="next",achSel=null,lvAll=false;
 let current=todayKey,tab="hoy",days={},missions={},shop={},buys={},db=null,editShop=false,pendingBuy=null;
 const dirty=new Set();let saveT=null;let lastTotals=null;const fresh=new Set();
 
@@ -1002,14 +1080,14 @@ function renderTop(T){
   let p=1;
   if(nx){p=(x-cur[0])/(nx[0]-cur[0]);
     if(T.li<T.reached)$("tonext").innerHTML=`Recupera <b>${nx[0]-x}</b> XP para volver a ${esc(nx[1])}`;
-    else{const pf=T.proof,miss=[];if(pf){if(pf.xp[0]<pf.xp[1])miss.push(`<b>${pf.xp[1]-pf.xp[0]}</b> XP`);if(pf.days[0]<pf.days[1])miss.push(`prueba <b>${pf.days[0]}/${pf.days[1]}</b>`);if(pf.weeks&&pf.weeks[0]<pf.weeks[1])miss.push(`canal <b>${pf.weeks[0]}/${pf.weeks[1]}</b> sem.`);if(pf.stay[0]<pf.stay[1])miss.push(`<b>${pf.stay[1]-pf.stay[0]}</b> días más en el nivel`)}
-      $("tonext").innerHTML=miss.length?`Para ${esc(nx[1])}: ${miss.join(" · ")}`:`Listo para ${esc(nx[1])}`}}
+    else{const pf=T.proof;let m="";if(pf){if(pf.xp[0]<pf.xp[1])m=`faltan <b>${pf.xp[1]-pf.xp[0]}</b> XP`;else if(pf.days[0]<pf.days[1])m=`prueba <b>${pf.days[0]}/${pf.days[1]}</b>`;else if(pf.weeks&&pf.weeks[0]<pf.weeks[1])m=`canal <b>${pf.weeks[0]}/${pf.weeks[1]}</b>`;else if(pf.stay[0]<pf.stay[1])m=`<b>${pf.stay[1]-pf.stay[0]}</b> días más`}
+      $("tonext").innerHTML=m?`${esc(nx[1])}: ${m}`:`Listo para ${esc(nx[1])}`}}
   else $("tonext").textContent="Nivel máximo";
   p=Math.min(1,Math.max(0,p));
   $("lvring").style.strokeDashoffset=345.58*(1-p);$("xpfill").style.width=(p*100)+"%";$("xppct").textContent=Math.floor(p*100)+"%";$("xppct").style.left=Math.min(92,Math.max(6,p*100))+"%";
   countTo($("xpnow"),T.xp);countTo($("coins"),T.coins);countTo($("xp"),T.xp);countTo($("streak"),T.curStreak);
   $("coinchip").classList.toggle("debt",T.coins<0);
-  $("multl").textContent=T.studySettled?"Racha · asentado":"Racha · x"+fmtDec(T.mult);
+  $("multl").textContent="Racha";
 }
 function stepBtns(f,vals){return vals.map(v=>{
   const a=Math.abs(v);const lab=f==="temas"?"½":(f!=="pages"&&a>=60?a/60+" h":a);
@@ -1025,85 +1103,69 @@ function viewHoy(T){
   const dt=parse(current),isToday=current===todayKey;
   const title=isToday?"Hoy":current===addDays(todayKey,-1)?"Ayer":DAYS[dt.getDay()][0].toUpperCase()+DAYS[dt.getDay()].slice(1);
   const pend=r.pens.reduce((s,p)=>s+p[1],0);
-  let penPills="";
-  if(r.applies)penPills=r.pens.map(p=>`<span class="pill warn">−${p[1]} · ${esc(p[0])}</span>`).join("");
-  else if(isToday&&current>=PEN_START&&r.pens.length)penPills=`<span class="pill warn">Si el día acaba así: −${pend} (${r.pens.map(p=>esc(p[0]).toLowerCase()).join(", ")})</span>`;
   const due=current>=PEN_START;
-  const studyTag=d.studyMin>=Math.max(90,r.minS)?'<span class="tag ok">Estándar</span>':d.studyMin>=r.minS?'<span class="tag ok">Mínimo</span>':`<span class="tag ${due?"bad":""}">Mín. ${fmtMin(r.minS)}</span>`;
-  const trainTag=r.trainReq?(d.trainMin>=r.minT?'<span class="tag ok">Hecho</span>':`<span class="tag ${due?"bad":""}">Mín. ${fmtMin(r.minT)}</span>`):'<span class="tag">Opcional</span>';
-  const tile=(e,cls,act)=>`<button type="button" class="tile ${cls}${d[e.id]?" on":""}" data-act="tog" data-f="${e.id}" id="h_${e.id}" aria-pressed="${!!d[e.id]}"><span class="ck">${I("check")}</span><div class="badge ${cls}">${I(e.ic)}</div><div><div class="tn">${esc(e.nm)}</div><div class="td">${esc(e.ds)}</div></div><div class="tp">+${e.pts}${e.pen?` <span class="pen">· −${e.pen} si no</span>`:""}${e.extra?` <span class="pen" style="color:var(--muted)">${esc(e.extra)}</span>`:""}</div></button>`;
-  const extraTiles=r.extras.map(e=>tile(e,"c-train")).join("");
-  const weekTiles=r.W.map(w=>tile(Object.assign({},w,{ds:"Esta semana: "+(r.wk[w.id]||0)+" de "+w.target,extra:"· −"+w.pen+" si el domingo no llegas"}),"c-mis")).map(t=>t.replace(/<span class="pen">· −\d+ si no<\/span>/,"")).join("");
-  const pr=T.proof;
-  const proofTiles=r.pext.map(e=>tile(Object.assign({},e,{pen:0,extra:"· prueba, sin castigo"}),"c-proof")).join("");
-  let proofCard="";
+  const mk=m=>Math.abs(m-1)>.001?`<span class="mult">x${fmtDec(Math.round(m*100)/100)}</span>`:"";
+  const meter=(cls,ic,name,val,valTxt,goal,goalTxt,pts,mult,btns,req)=>`<div class="mrow ${cls}${goal&&val>=goal?" ok":req&&due?" due":""}">
+      <div class="mhead"><span class="mic">${I(ic)}</span><span class="mname">${name}</span><span class="mval"><b>${valTxt}</b>${goalTxt?" / "+goalTxt:""}</span><span class="mpts">+${pts}${mult||""}</span></div>
+      ${goal?`<div class="mbar"><i style="width:${Math.min(100,Math.round(val/goal*100))}%"></i></div>`:""}
+      <div class="mbtns">${btns}</div></div>`;
+  const chk=(e,sub,tag)=>`<button type="button" class="chk${d[e.id]?" on":""}${e.pen&&due&&!tag?" req":""}" data-act="tog" data-f="${e.id}" id="h_${e.id}" aria-pressed="${!!d[e.id]}"><span class="cbox">${I("check")}</span><span class="cn"><b>${esc(e.nm)}</b>${sub?`<small>${esc(sub)}</small>`:""}</span>${tag?`<span class="ctag">${tag}</span>`:""}${e.pts!=null?`<span class="cp">+${e.pts}</span>`:""}</button>`;
+  const subOf=e=>e.id==="correr"?e.ds:e.id==="thai"?e.ds.split(":")[0]:"";
+  const extraRows=r.extras.map(e=>chk(e,subOf(e))).join("");
+  const weekRows=r.W.map(w=>chk(w,(r.wk[w.id]||0)+" de "+w.target+" esta semana")).join("");
+  const proofRows=r.pext.map(e=>chk(Object.assign({},e,{pen:0}),subOf(e),"Prueba")).join("");
+  const habitRows=HABITS.filter(h=>!h.lv||T.li+1>=h.lv).map(h=>chk(h,"")).join("");
+  const pr=T.proof;let proofCard="";
   if(isToday&&pr&&T.li===T.reached){const miss=missingFor(days[current],current,pr.j);
     const segs=(l,a,b)=>`<div class="pr"><div class="prl"><span>${l}</span><b>${Math.min(a,b)}/${b}</b></div><div class="prsg">${Array.from({length:b},(_,i)=>`<i${i<a?' class="on"':""}></i>`).join("")}</div></div>`;
     const xpb=`<div class="pr"><div class="prl"><span>XP</span><b>${Math.min(pr.xp[0],pr.xp[1])}/${pr.xp[1]}</b></div><div class="prb"><i style="width:${Math.min(100,Math.round(pr.xp[0]/pr.xp[1]*100))}%"></i></div></div>`;
-    proofCard=`<div data-k="試" class="card c-proof${pr.ok?" done":""}">${head("target","c-proof","Hacia "+esc(LEVELS[pr.j][1]),"Nivel "+(pr.j+1)+": "+esc(LV_TXT[pr.j]),pr.ok?'<span class="tag ok">Superada</span>':"")}
-      <div class="prs">${segs("Días cumpliendo el nivel "+(pr.j+1)+" (de los últimos "+PROOF.win+")",pr.days[0],pr.days[1])}${pr.weeks?segs("Semanas con el canal al día (de las últimas 4)",pr.weeks[0],pr.weeks[1]):""}${segs("Días en tu nivel",pr.stay[0],pr.stay[1])}${xpb}</div>
-      <div class="prtoday${miss.length?"":" ok"}">${miss.length?"Para que hoy cuente te falta: "+esc(miss.join(" · ")):"Hoy ya cuenta para la prueba"}</div></div>`}
-  const pagesTag=d.pages>=r.minP?'<span class="tag ok">Mínimo</span>':`<span class="tag ${due?"bad":""}">Mín. ${r.minP} pág.</span>`;
-  const mk=m=>Math.abs(m-1)>.001?`<span class="mult">x${fmtDec(Math.round(m*100)/100)}</span>`:"";
-  const hs=h=>{const x=r.st[h];if(!x)return "";const nx=x.next?` · constancia ${x.streak}/${x.next[0]} (+${x.next[1]})`:"";return `<div class="hstate${x.settled?" set":""}">${x.settled?"Hábito asentado · vale la mitad · si fallas, castigo doble":"En construcción"+(x.f>1?" · +"+Math.round((x.f-1)*100)+" % por nivel":"")}${nx}</div>`};
-  const habits=HABITS.filter(h=>!h.lv||T.li+1>=h.lv).map(h=>`<button type="button" class="tile c-habit${d[h.id]?" on":""}" data-act="tog" data-f="${h.id}" id="h_${h.id}" aria-pressed="${!!d[h.id]}"><span class="ck">${I("check")}</span><div class="badge c-habit">${I(h.ic)}</div><div><div class="tn">${esc(h.nm)}</div><div class="td">${esc(h.ds)}</div></div><div class="tp">+${h.pts}${h.pen?` <span class="pen">· −${h.pen} si no</span>`:""}</div></button>`).join("");
-  const dm=dailyMissions(current).map(([id,nm,p])=>misCard(id,nm,p,"Misión del día",!!d.mis[id],"mis",false,"target"));
-  const cm=Object.entries(missions).filter(([,m])=>m.tipo==="diaria").map(([id,m])=>misCard(id,m.nm,m.pts,"Tu misión diaria",!!d.mis[id],"mis",true,"seal"));
+    proofCard=`<details class="fold c-proof" id="fold_proof"><summary><span class="mic">${I("target")}</span><span class="cn"><b>Hacia ${esc(LEVELS[pr.j][1])}</b><small>${pr.ok?"Prueba superada":"Prueba "+pr.days[0]+"/"+pr.days[1]+" · "+Math.min(pr.xp[0],pr.xp[1])+"/"+pr.xp[1]+" XP"}</small></span>${I("right")}</summary>
+      <div class="foldb"><div class="prs">${segs("Días cumpliendo ya el nivel "+(pr.j+1),pr.days[0],pr.days[1])}${pr.weeks?segs("Semanas con el canal al día",pr.weeks[0],pr.weeks[1]):""}${segs("Días en tu nivel",pr.stay[0],pr.stay[1])}${xpb}</div>
+      <p class="hint">${esc(LV_TXT[pr.j])}</p>
+      <div class="prtoday${miss.length?"":" ok"}">${miss.length?"Hoy te falta: "+esc(miss.join(" · ")):"Hoy ya cuenta para la prueba"}</div></div></details>`}
+  const dm=dailyMissions(current).map(([id,nm,p])=>misCard(id,nm,p,"",!!d.mis[id],"mis",false));
+  const cm=Object.entries(missions).filter(([,m])=>m.tipo==="diaria").map(([id,m])=>misCard(id,m.nm,m.pts,"",!!d.mis[id],"mis",true));
   // retos únicos: los 3 siguientes pendientes, en orden de ruta, y los que se completaron hoy
   const uAll=Object.entries(missions).filter(([,m])=>m.tipo==="unica"),uPend=uAll.filter(([,m])=>!m.done),uDone=uAll.filter(([,m])=>m.done);
-  const um=isToday?uAll.filter(([,m])=>m.done&&m.doneAt===todayKey).concat(uPend.slice(0,3)).map(([id,m])=>misCard(id,m.nm,m.pts,m.done?"Completada":"Misión única",!!m.done,"unica",true,"star")):[];
-  const umMore=uPend.length>3?`<p class="hint">Y ${uPend.length-3} más en tu ruta · ${uDone.length} completados</p>`:"";
+  const um=isToday?uAll.filter(([,m])=>m.done&&m.doneAt===todayKey).concat(uPend.slice(0,3)).map(([id,m])=>misCard(id,m.nm,m.pts,"",!!m.done,"unica",true)):[];
+  const good=(r.perfect?1:0)+r.miles.length+(r.legend?1:0);
   return `<section class="view">
     <div class="daynav"><button type="button" data-act="prev" id="prev" aria-label="Día anterior" ${current<=START?"disabled":""}>${I("left")}</button>
       <div><h2>${title}</h2><div class="sub">${DAYS[dt.getDay()]} ${dt.getDate()} de ${MONTHS[dt.getMonth()]}</div></div>
       <button type="button" data-act="next" id="next" aria-label="Día siguiente" ${isToday?"disabled":""}>${I("right")}</button></div>
 
-    <div class="balance"><div class="row1"><div><div class="lab">Balance del día</div><div class="big${r.net<0?" neg":""}" id="dnet">${r.net>0?"+":""}${r.net}</div></div>
-      <div class="pills"><span class="pill">+${r.gain} ganados</span>${r.perfect?'<span class="pill good">+15 día perfecto</span>':""}${r.miles.map(m=>`<span class="pill good">+${m[1]} constancia: ${esc(m[0])}</span>`).join("")}${r.legend?'<span class="pill good">+40 leyenda: 4 h de estudio</span>':""}</div></div>
-      ${penPills?`<div class="pills">${penPills}</div>`:""}</div>
+    <div class="balance"><div><div class="lab">Balance</div><div class="big${r.net<0?" neg":""}" id="dnet">${r.net>0?"+":""}${r.net}</div></div>
+      <div class="pills">${d.excusa?'<span class="pill">Fuerza mayor</span>':""}${r.perfect?'<span class="pill good">Día perfecto +15</span>':""}${r.miles.map(m=>`<span class="pill good">Constancia +${m[1]}</span>`).join("")}${r.legend?'<span class="pill good">Leyenda +40</span>':""}${r.applies&&r.pen?`<span class="pill warn">Castigo −${r.pen}</span>`:(isToday&&due&&pend?`<span class="pill warn">En juego −${pend}</span>`:"")}</div></div>
 
-    <div class="sec"><h2>Obligatorios</h2><small>Cada día</small></div>
-    <div data-k="学" class="card c-study ${d.studyMin>=r.minS?"done":due?"due":""}">${head("study","c-study","Estudio","20 pts por hora",studyTag)}
-      <div class="cmain">${ring(d.studyMin,Math.max(90,r.minS),fmtMin(d.studyMin),"meta "+fmtMin(Math.max(90,r.minS)))}
-      <div class="cside">${hs("study")}<div class="pts"><b>+${r.g.study}</b>pts${mk(r.mS)}</div><div class="steps">${stepBtns("studyMin",[-15,15,30,60])}</div></div></div></div>
+    <div class="panel">
+      ${meter("c-study","study","Estudio",d.studyMin,fmtMin(d.studyMin),r.minS,fmtMin(r.minS),r.g.study,mk(r.mS),stepBtns("studyMin",[-15,15,30,60]),true)}
+      ${meter("c-read","book","Lectura",d.pages,d.pages+" pág.",r.minP,r.minP,r.g.pages,"",stepBtns("pages",[-5,10,25])+`<input class="pages-in" type="number" inputmode="numeric" min="0" id="pagesIn" value="${d.pages}" aria-label="Escribe las páginas exactas">`,true)}
+      ${meter("c-train","glove","Entreno",d.trainMin,fmtMin(d.trainMin),r.trainReq?r.minT:0,r.trainReq?fmtMin(r.minT):"libre",r.g.train,mk(r.mT),stepBtns("trainMin",[-15,15,30,60]),r.trainReq)}
+      ${meter("c-study","code","Temas",d.temas,fmtDec(d.temas),0,"",r.g.temas,"",stepBtns("temas",[-.5,.5]),false)}
+    </div>
 
-    <div data-k="読" class="card c-read ${d.pages>=r.minP?"done":due?"due":""}">${head("book","c-read","Lectura","2 pts por cada 10 páginas",pagesTag)}
-      <div class="cmain"><div class="bignum"><b>${d.pages}</b><span>páginas</span></div>
-      <div class="cside">${hs("pages")}<div class="pts"><b>+${r.g.pages}</b>pts</div><div class="steps">${stepBtns("pages",[-5,10,25])}<input class="pages-in" type="number" inputmode="numeric" min="0" id="pagesIn" value="${d.pages}" aria-label="Escribe las páginas exactas"></div></div></div></div>
-
-    <div data-k="拳" class="card c-train ${d.trainMin>=r.minT?"done":(r.trainReq&&due)?"due":""}">${head("glove","c-train","Entreno","12 pts por hora · thai, pesas o casa",trainTag)}
-      <div class="cmain">${ring(d.trainMin,r.minT,fmtMin(d.trainMin),"meta "+fmtMin(r.minT))}
-      <div class="cside">${hs("train")}<div class="pts"><b>+${r.g.train}</b>pts${mk(r.mT)}</div><div class="steps">${stepBtns("trainMin",[-15,15,30,60])}</div></div></div></div>
-
-    ${extraTiles?`<div class="sec"><h2>Hoy toca</h2><small>${r.extras.length}</small></div><div class="tiles">${extraTiles}</div>`:""}
-    ${weekTiles?`<div class="sec"><h2>Canal</h2><small>Retos semanales</small></div><div class="tiles">${weekTiles}</div>`:""}
-    ${proofCard||proofTiles?`<div class="sec"><h2>Prueba</h2><small>${pr?"Nivel "+(pr.j+1):"Opcional"}</small></div>${proofCard}${proofTiles?`<div class="tiles">${proofTiles}</div>`:""}`:""}
-    <div class="sec"><h2>Hábitos</h2><small>Toca para marcar</small></div>
-    <div class="tiles">${habits}</div>
+    <div class="panel">
+      ${extraRows?`<div class="glab">Hoy toca</div>${extraRows}`:""}
+      ${weekRows?`<div class="glab">Esta semana</div>${weekRows}`:""}
+      <div class="glab">Hábitos</div>${habitRows}
+      ${proofRows?`<div class="glab">Del nivel siguiente</div>${proofRows}`:""}
+    </div>
+    ${proofCard}
     ${animoCard(d)}
 
-    <div data-k="進" class="card c-study">${head("code","c-study","Avance del curso","10 pts por tema completado",'<span class="tag">Certificación</span>')}
-      <div class="cmain"><div class="bignum"><b>${fmtDec(d.temas)}</b><span>temas hoy</span></div>
-      <div class="cside"><div class="pts"><b>+${r.g.temas}</b>pts</div><div class="steps">${stepBtns("temas",[-.5,.5])}</div></div></div></div>
-
-    <div class="sec"><h2>Imprevistos</h2><small>Solo si de verdad no puedes</small></div>
-    <div class="tiles">${tile({id:"excusa",nm:"Día de fuerza mayor",ds:"Urgencia, enfermedad o algo que no depende de ti. Hoy no resta ni rompe rachas, pero tampoco cuenta para la prueba. Sé honesto contigo.",ic:"seal"},"c-proof")}</div>
-    <div class="sec"><h2>Misiones</h2><small>${dm.length+cm.length} hoy</small></div>
-    ${dm.join("")}${cm.join("")}
-    ${um.length?`<div class="sec"><h2>Retos únicos</h2><small>Premio grande</small></div>${um.join("")}${umMore}`:""}
+    <div class="panel"><div class="glab">Misiones de hoy</div>${dm.join("")}${cm.join("")}
+      ${um.length?`<div class="glab">Retos únicos</div>${um.join("")}${uPend.length>3?`<div class="more">${uPend.length-3} más en tu ruta · ${uDone.length} completados</div>`:""}`:""}
+    </div>
     <details class="addbox" id="addmis"><summary>${I("plus")} Crear una misión</summary>
       <form class="form" id="fmis"><input id="mnm" class="full" required maxlength="90" placeholder="Ej.: Terminar el curso de Linux">
       <select id="mtipo" aria-label="Tipo de misión"><option value="unica">Única (una vez)</option><option value="diaria">Diaria (cada día)</option></select>
       <input id="mpts" type="number" min="1" max="1000" required placeholder="Puntos" inputmode="numeric" aria-label="Puntos">
       <button class="btn full" type="submit">Crear misión</button></form></details>
-    <p class="hint">Día perfecto (+15): al menos 1 h 30 de estudio y todos los mínimos de tu nivel cumplidos. Los castigos se aplican al terminar el día y restan XP y monedas.</p>
+    <div class="panel">${chk({id:"excusa",nm:"Día de fuerza mayor"},"Solo urgencias: hoy no resta ni rompe rachas")}</div>
   </section>`;
 }
-function misCard(id,nm,p,kind,done,act,custom,ic){
-  return `<div class="mis c-mis${done?" done":""}" role="button" tabindex="0" data-act="${act}" data-id="${esc(id)}" id="mis_${esc(id)}" aria-pressed="${done}">
-    <div class="badge c-mis">${I(ic)}</div>
-    <div style="min-width:0"><div class="mk">${esc(kind)}</div><div class="mt">${esc(nm)}</div>${custom?`<button type="button" class="del" data-act="delmis" data-id="${esc(id)}">Borrar misión</button>`:""}</div>
-    <div class="rw">+${+p||0}</div>${done?`<div class="hanko${fresh.has(id)?" anim":""}">済</div>`:""}</div>`;
+function misCard(id,nm,p,kind,done,act,custom){
+  return `<div class="chk${done?" on":""}" role="button" tabindex="0" data-act="${act}" data-id="${esc(id)}" id="mis_${esc(id)}" aria-pressed="${done}"><span class="cbox">${I("check")}</span><span class="cn"><b>${esc(nm)}</b></span>${custom&&!done?`<button type="button" class="cdel" data-act="delmis" data-id="${esc(id)}" aria-label="Borrar misión">×</button>`:""}<span class="cp">+${+p||0}</span></div>`;
 }
 function prodIcon(nm,cat){const n=nm.toLowerCase();
   const m=[["juego","controller"],["jugar","controller"],["peli","film"],["serie","film"],["episod","film"],["historia","phone"],["móvil","phone"],["caf","cup"],["bebida","cup"],["té","cup"],["churro","churro"],["merienda","churro"],["dulce","churro"],["cena","burger"],["hamburg","burger"],["comer","burger"],["pizza","burger"],["libro","book"],["pelo","bottle"],["skincare","bottle"],["crema","bottle"],["ropa","shirt"],["chaqueta","shirt"],["sudadera","shirt"],["zapat","shirt"],["pendiente","gem"],["gafas","glasses"],["corte","scissors"],["patata","chips"],["reloj","watch"],["camis","shirt"],["prenda","shirt"],["librer","shelf"],["habitaci","shelf"]];
@@ -1168,7 +1230,7 @@ function achSection(T){
     return `<button type="button" class="achip${achCat===c[0]?" on":""}" data-act="achcat" data-c="${c[0]}" id="ac_${c[0]}" aria-pressed="${achCat===c[0]}"><span class="kj">${c[2]}</span>${c[1]}${n}</button>`}).join("");
   let list,extra="";
   if(achCat==="next"){
-    const open=CH.map(c=>[c,chainState(c,T)]).filter(([,s])=>s.nx).sort((a,b)=>b[1].frac-a[1].frac||(TIER[a[1].nx.t].xp-TIER[b[1].nx.t].xp)).slice(0,6);
+    const open=CH.map(c=>[c,chainState(c,T)]).filter(([,s])=>s.nx).sort((a,b)=>b[1].frac-a[1].frac||(TIER[a[1].nx.t].xp-TIER[b[1].nx.t].xp)).slice(0,3);
     list=open.map(([c])=>chainCard(c,T,true)).join("");
     const rec=T.achGot.slice().sort((a,b)=>T.achAt[b]<T.achAt[a]?-1:T.achAt[b]>T.achAt[a]?1:0).slice(0,4);
     if(rec.length)extra=`<div class="recent"><div class="rh">Últimas conseguidas</div><div class="rl">${rec.map(id=>{const a=ACHM[id];return `<div class="ri"><span class="mdl sh-${MSH[a.ci%MSH.length]} m${a.t}"><span>${a.k}</span></span><div><b>${esc(a.nm)}</b><small>${TIER[a.t].n} · ${dShort(T.achAt[id])}</small></div></div>`}).join("")}</div></div>`;
@@ -1186,24 +1248,27 @@ function animoCard(d){
   const col=n=>n>=7?"var(--jade)":n>=4?"var(--gold)":"var(--sun)";
   const btns=Array.from({length:10},(_,i)=>{const n=i+1;return `<button type="button" class="anb${v===n?" on":""}" data-act="animo" data-v="${n}" id="an_${n}" aria-pressed="${v===n}" style="--ac:${col(n)}">${n}</button>`}).join("");
   const strip=last.map(n=>`<i style="height:${n?Math.max(10,n*10):4}%;background:${n?col(n):"var(--line)"}"></i>`).join("");
-  return `<div data-k="心" class="card c-proof">${head("star","c-proof","Ánimo de hoy",v?"Lo has puntuado con un "+v:"Puntúa del 1 al 10 cómo ha sido tu día",w.length?`<span class="tag">Media 7 días · ${fmtDec(avg.toFixed(1))}</span>`:"")}
+  return `<div class="panel animo"><div class="ah"><b>Ánimo</b><span>${w.length?"Media de 7 días: "+fmtDec(avg.toFixed(1)):"Puntúa tu día"}</span></div>
     <div class="anrow">${btns}</div>
-    <div class="anstrip" aria-label="Ánimo de los últimos 14 días">${strip}</div>
-    <p class="hint" style="position:relative;z-index:1">Últimos 14 días. No suma ni resta puntos: es para ver si el gris se va aclarando.</p></div>`;
+    <div class="anstrip" aria-label="Ánimo de los últimos 14 días">${strip}</div></div>`;
 }
 function viewProgreso(T){
   const s=T.stats;
-  const lv=LEVELS.map(([x,nm,un],i)=>`<div class="lv${i<=T.li?" got":""}${i===T.li?" cur":""}"><div class="nd"><span>${i+1}</span></div><div style="min-width:0"><div class="ln">${esc(nm)}</div>${i===T.li?`<div class="lu">Estás aquí</div>`:""}<div class="oblig">${esc(LV_TXT[i])}</div>${i?`<div class="oblig"><b>Para llegar:</b> ${x} XP · ${PROOF.stay} días en el nivel ${i} · cumplir ya estos mínimos ${PROOF.days} de ${PROOF.win} días${weeklyFor(i-1).length?` · ${PROOF.weeks} de 4 semanas con los retos del canal al día`:""}</div>`:""}<span class="band" style="background:${BANDS[i]}"></span></div><div class="lx">${x}</div></div>`).join("");
+  const lv=LEVELS.map(([x,nm,un],i)=>`<div class="lv${i<=T.li?" got":""}${i===T.li?" cur":""}"><div class="nd"><span>${i+1}</span></div><div style="min-width:0"><div class="ln">${esc(nm)}</div>${i===T.li?`<div class="lu">Estás aquí</div>`:""}${lvAll||i===T.li||i===T.li+1?`<div class="oblig">${esc(LV_TXT[i])}</div>`:""}${i&&(lvAll||i===T.li+1)?`<div class="oblig"><b>Para llegar:</b> ${x} XP · ${PROOF.stay} días en el nivel ${i} · cumplir ya estos mínimos ${PROOF.days} de ${PROOF.win} días${weeklyFor(i-1).length?` · ${PROOF.weeks} de 4 semanas con los retos del canal al día`:""}</div>`:""}<span class="band" style="background:${BANDS[i]}"></span></div><div class="lx">${x}</div></div>`).join("");
   const st=(cls,ic,v,l)=>`<div class="stat ${cls}" style="background:linear-gradient(170deg,var(--surface2),var(--surface))"><div class="top">${I(ic)}</div><div class="v">${v}</div><div class="l">${l}</div></div>`;
   return `<section class="view">
     <div class="stats">${st("c-study","study",fmtDec(s.studyH.toFixed(1))+"<small>h</small>","Estudio")}${st("c-train","glove",fmtDec(s.trainH.toFixed(1))+"<small>h</small>","Entreno")}${st("c-read","book",s.pages,"Páginas")}</div>
     ${achSection(T)}
     <div class="sec"><h2>Camino del luchador</h2><small>Día ${T.dayN} · ${T.settled}/5 asentados</small></div>
     <div class="path">${lv}</div>
+    <button type="button" class="linkrow" data-act="lvall" id="lvall">${lvAll?"Ver solo mi nivel y el siguiente":"Ver qué pide cada nivel"}</button>
+    <details class="fold" id="fold_help"><summary><span class="cn"><b>Cómo funciona</b></span>${I("right")}</summary><div class="foldb">
     <p class="hint"><b>Cómo funciona:</b> un hábito está en construcción hasta que lo cumples 12 de los últimos 14 días. Mientras se construye, vale un 8 % más por cada nivel y se beneficia de la racha de estudio. Cuando se asienta, pasa a valer la mitad y fallarlo cuesta el doble: lo que se premia entonces es mantenerlo, con bonus de constancia a los 7, 21, 50 y 100 días seguidos (+30, +70, +150, +300).</p>
     <p class="hint"><b>Subir de nivel</b> pide la XP, al menos ${PROOF.stay} días en tu nivel y superar la prueba: cumplir ya los mínimos del nivel siguiente ${PROOF.days} de los últimos ${PROOF.win} días. Lo nuevo de ese nivel te sale en Hoy como «prueba», sin castigo. En los niveles del canal, además, ${PROOF.weeks} de las últimas 4 semanas con los retos de tu nivel cumplidos. Si ya vas por encima, subes en cuanto lo demuestras. El nivel solo se pierde si los castigos te bajan de la XP necesaria.</p>
     <p class="hint"><b>Medallas:</b> ${ACH.length} repartidas en ${CH.length} cadenas. Cada una tiene su dificultad: Bronce +10 XP, Plata +25, Oro +60 y Leyenda +150. Los récords de día y semana cuentan lo que ganas con tus actos, sin los bonus de constancia. La XP de las medallas también son monedas. Toca una para ver qué pide y cuánto te falta.</p>
     <p class="hint"><b>Racha de estudio</b> (días seguidos con el mínimo de tu nivel): 3 días x1,2 · 7 x1,5 · 14 x1,75 · 30 x2. Solo multiplica el estudio y el entreno mientras están en construcción.</p>
+    <p class="hint"><b>Día perfecto</b> (+15): al menos 1 h 30 de estudio y todos los mínimos de tu nivel cumplidos. Los castigos se aplican al terminar el día y restan XP y monedas.</p>
+    </div></details>
   </section>`;
 }
 function viewHist(T){
@@ -1260,9 +1325,9 @@ function viewHist(T){
 function render(fx){
   const T=compute();renderTop(T);
   const focusId=document.activeElement&&document.activeElement.id;
-  const openMis=$("addmis")&&$("addmis").open;
+  const openIds=[...document.querySelectorAll("#view details[open]")].map(x=>x.id).filter(Boolean);
   $("view").innerHTML=({hoy:viewHoy,tienda:viewTienda,progreso:viewProgreso,hist:viewHist})[tab](T);
-  if(openMis&&$("addmis"))$("addmis").open=true;
+  openIds.forEach(id=>{if($(id))$(id).open=true});
   const ac=document.querySelector(".achip.on");if(ac){const pr=ac.parentElement;pr.scrollLeft=Math.max(0,ac.offsetLeft-(pr.clientWidth-ac.offsetWidth)/2)}
   if(focusId&&$(focusId)&&focusId!=="pagesIn"&&!focusId.startsWith("t-"))$(focusId).focus({preventScroll:true});
   const i=["hoy","tienda","progreso","hist"].indexOf(tab);$("ind").style.transform=`translateX(${i*100}%)`;
@@ -1347,6 +1412,7 @@ document.addEventListener("click",e=>{
     writeDoc("compras/"+bid,buys[bid]).then(ok=>{if(!ok){delete buys[bid];render()}});return}
   if(a==="undo"){if(!buys[id])return;delete buys[id];render();toast("Canje deshecho","coin");delDoc("compras/"+id);return}
   if(a==="editshop"){editShop=!editShop;render();return}
+  if(a==="lvall"){lvAll=!lvAll;render();return}
   if(a==="achcat"){achCat=b.dataset.c;achSel=null;render();return}
   if(a==="medal"){achSel=achSel===id?null:id;render();return}
   if(a==="delitem"){delete shop[id];render();delDoc("tienda/"+id);return}
@@ -1377,7 +1443,7 @@ const Scene=(function(){
   function draw(now){
     const t=(now-t0)/1000;ctx.clearRect(0,0,W,H);
     const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,cssv("--sky1"));g.addColorStop(1,cssv("--sky2"));ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    const sx=W*.76,sy=H*.36,sr=Math.min(W,H)*.19;ctx.fillStyle=cssv("--sun");ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fill();
+    const sx=W*.87,sy=H*.16,sr=Math.min(W,H)*.13;ctx.fillStyle=cssv("--sun");ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fill();
     ridge(H*.62,H*.22,1.3,cssv("--m1"));ridge(H*.78,H*.2,4.1,cssv("--m2"));
     ctx.strokeStyle=cssv("--bamboo");ctx.lineCap="round";
     for(let i=0;i<3;i++){const x=W*.08+i*15,sw=Math.sin(t*.5+i)*4;ctx.lineWidth=4.5;ctx.beginPath();ctx.moveTo(x,H);ctx.quadraticCurveTo(x+6+sw*.5,H*.45,x+16+sw,H*.04);ctx.stroke();
