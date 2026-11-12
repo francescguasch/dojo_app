@@ -521,6 +521,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .prb i{display:block;height:100%;background:var(--c);transition:width .8s var(--ease)}
 .prtoday{position:relative;z-index:1;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600;color:var(--muted)}
 .prtoday.ok{color:var(--jade)}
+/* ===== ánimo ===== */
+.anrow{position:relative;z-index:1;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}
+.anb{appearance:none;border:1px solid var(--line);background:var(--surface2);color:var(--ink);height:44px;border-radius:10px;font-family:var(--num);font-size:21px;padding-top:3px;cursor:pointer;transition:transform .15s,background .2s}
+.anb:active{transform:scale(.92)}
+.anb.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.anstrip{position:relative;z-index:1;display:flex;align-items:flex-end;gap:4px;height:46px}
+.anstrip i{flex:1;border-radius:3px 3px 1px 1px}
 /* ===== historial con carácter ===== */
 .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (min-width:520px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -681,7 +688,9 @@ const HABITS=[
   {id:"movil",nm:"Dormir 8 h",ds:"Anoche dormiste 8 h o más · mínimo 5 noches por semana",pts:5,ic:"moon"},
   {id:"social",nm:"Reto social",ds:"Pregunta de seguimiento, saludar por el nombre o contar algo tuyo",pts:5,ic:"talk"},
   {id:"video",nm:"Diario en cámara",ds:"1 o 2 min hablando a cámara",pts:5,lv:2,ic:"camera"},
-  {id:"proyecto",nm:"Proyecto propio",ds:"30 min en un script o proyecto tuyo",pts:10,lv:5,ic:"brackets"}
+  {id:"proyecto",nm:"Proyecto propio",ds:"30 min en un script o proyecto tuyo",pts:10,lv:5,ic:"brackets"},
+  {id:"salir",nm:"Salir de casa",ds:"20 min fuera, mejor con luz de día",pts:5,ic:"run"},
+  {id:"disfrute",nm:"Algo que disfruto",ds:"Una cosa solo por gusto, sin obligación",pts:3,ic:"star"}
 ];
 const LEVELS=[[0,"Novato","Empiezas aquí"],[1000,"Aprendiz","Trote del domingo y diario en cámara"],[2200,"Nak Muay","Dormir 8 h, al menos 5 noches por semana"],[4500,"Luchador","Collserola y sprints"],[7500,"Guerrero","Entreno de 2 h, estudio de muay thai y proyecto propio"],[10000,"Cámara","Aprendes a grabar"],[12500,"Montador","Aprendes a editar"],[15500,"Estreno","Se abre el Instagram de muay thai"],[19000,"Veterano","Guiones de ingeniería"],[23000,"Campeón local","Se abre el canal de ingeniería"],[28000,"Kru","Entreno de 3 h"],[34500,"Maestro",""],[43000,"Leyenda","4 h de estudio dan +40"]];
 // para ascender: XP + prueba de nivel (cumplir ya lo del nivel siguiente) + un mínimo de días en el nivel
@@ -1071,6 +1080,7 @@ function viewHoy(T){
     ${proofCard||proofTiles?`<div class="sec"><h2>Prueba</h2><small>${pr?"Nivel "+(pr.j+1):"Opcional"}</small></div>${proofCard}${proofTiles?`<div class="tiles">${proofTiles}</div>`:""}`:""}
     <div class="sec"><h2>Hábitos</h2><small>Toca para marcar</small></div>
     <div class="tiles">${habits}</div>
+    ${animoCard(d)}
 
     <div data-k="進" class="card c-study">${head("code","c-study","Avance del curso","10 pts por tema completado",'<span class="tag">Certificación</span>')}
       <div class="cmain"><div class="bignum"><b>${fmtDec(d.temas)}</b><span>temas hoy</span></div>
@@ -1169,6 +1179,18 @@ function achSection(T){
     ${extra}
     <div class="chains">${list}</div>`;
 }
+// ánimo del día: 1-10, con la media de los últimos 7 días y una tira de 14
+function animoCard(d){
+  const v=+d.animo||0,last=[];for(let i=13;i>=0;i--){const k=addDays(current,-i);last.push(+((days[k]||{}).animo)||0)}
+  const w=last.slice(-7).filter(Boolean),avg=w.length?(w.reduce((a,b)=>a+b,0)/w.length):0;
+  const col=n=>n>=7?"var(--jade)":n>=4?"var(--gold)":"var(--sun)";
+  const btns=Array.from({length:10},(_,i)=>{const n=i+1;return `<button type="button" class="anb${v===n?" on":""}" data-act="animo" data-v="${n}" id="an_${n}" aria-pressed="${v===n}" style="--ac:${col(n)}">${n}</button>`}).join("");
+  const strip=last.map(n=>`<i style="height:${n?Math.max(10,n*10):4}%;background:${n?col(n):"var(--line)"}"></i>`).join("");
+  return `<div data-k="心" class="card c-proof">${head("star","c-proof","Ánimo de hoy",v?"Lo has puntuado con un "+v:"Puntúa del 1 al 10 cómo ha sido tu día",w.length?`<span class="tag">Media 7 días · ${fmtDec(avg.toFixed(1))}</span>`:"")}
+    <div class="anrow">${btns}</div>
+    <div class="anstrip" aria-label="Ánimo de los últimos 14 días">${strip}</div>
+    <p class="hint" style="position:relative;z-index:1">Últimos 14 días. No suma ni resta puntos: es para ver si el gris se va aclarando.</p></div>`;
+}
 function viewProgreso(T){
   const s=T.stats;
   const lv=LEVELS.map(([x,nm,un],i)=>`<div class="lv${i<=T.li?" got":""}${i===T.li?" cur":""}"><div class="nd"><span>${i+1}</span></div><div style="min-width:0"><div class="ln">${esc(nm)}</div>${i===T.li?`<div class="lu">Estás aquí</div>`:""}<div class="oblig">${esc(LV_TXT[i])}</div>${i?`<div class="oblig"><b>Para llegar:</b> ${x} XP · ${PROOF.stay} días en el nivel ${i} · cumplir ya estos mínimos ${PROOF.days} de ${PROOF.win} días${weeklyFor(i-1).length?` · ${PROOF.weeks} de 4 semanas con los retos del canal al día`:""}</div>`:""}<span class="band" style="background:${BANDS[i]}"></span></div><div class="lx">${x}</div></div>`).join("");
@@ -1195,7 +1217,7 @@ function viewHist(T){
     let nodes="";for(let yy=y+14;yy<y+h-4;yy+=14)nodes+=`<line class="node" x1="${x.toFixed(1)}" x2="${(x+w).toFixed(1)}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}"/>`;
     return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1.5,h).toFixed(1)}" rx="5" fill="${v>=0?"var(--jade)":"var(--sun)"}"><title>${v} pts</title></rect>${nodes}${v?`<text x="${(x+w/2).toFixed(1)}" y="${(v>=0?y-4:y+h+12).toFixed(1)}" text-anchor="middle">${v}</text>`:""}<text x="${(x+w/2).toFixed(1)}" y="${H-8}" text-anchor="middle">${DAYS[dt.getDay()][0].toUpperCase()}</text>`}).join("");
   const rows=ks.slice().reverse().map(k=>{const r=T.days[k],dt=parse(k);
-    const sub=[r.d.studyMin>=30?fmtMin(r.d.studyMin)+" de estudio":"Sin el mínimo de estudio",r.d.excusa?"fuerza mayor":"",r.pen?"castigo −"+r.pen:"",r.perfect?"día perfecto":"",r.medals.length?r.medals.length+(r.medals.length>1?" medallas":" medalla")+" +"+r.medXP+" XP":""].filter(Boolean).join(" · ");
+    const sub=[r.d.studyMin>=30?fmtMin(r.d.studyMin)+" de estudio":"Sin el mínimo de estudio",r.d.excusa?"fuerza mayor":"",r.d.animo?"ánimo "+r.d.animo:"",r.pen?"castigo −"+r.pen:"",r.perfect?"día perfecto":"",r.medals.length?r.medals.length+(r.medals.length>1?" medallas":" medalla")+" +"+r.medXP+" XP":""].filter(Boolean).join(" · ");
     return `<div class="row"><div><div class="rt">${k===todayKey?"Hoy":DAYS[dt.getDay()][0].toUpperCase()+DAYS[dt.getDay()].slice(1)+" "+dt.getDate()}</div><div class="rs">${sub}</div></div><div class="rv${r.net<0?" neg":""}">${r.net>0?"+":""}${r.net}</div></div>`}).join("");
   const bl=Object.entries(buys).sort((a,b)=>String(b[1].at).localeCompare(String(a[1].at)));
   const brows=bl.length?bl.slice(0,20).map(([id,b],i)=>{const dt=new Date(b.at);return `<div class="row"><div><div class="rt">${esc(b.nm)}</div><div class="rs">${dt.getDate()}/${dt.getMonth()+1}</div>${i===0?`<button type="button" class="linkbtn" style="margin-top:8px" data-act="undo" data-id="${esc(id)}" id="undo">Deshacer</button>`:""}</div><div class="rv neg">−${+b.c||0}</div></div>`}).join(""):'<div class="empty">Todavía no has canjeado nada.</div>';
@@ -1309,6 +1331,7 @@ document.addEventListener("click",e=>{
   if(a==="prev"){if(current>START){current=addDays(current,-1);render()}return}
   if(a==="next"){if(current<todayKey){current=addDays(current,1);render()}return}
   if(a==="step"){const f=b.dataset.f,dv=+b.dataset.d;changeDay(d=>{d[f]=Math.max(0,Math.round(((+d[f]||0)+dv)*10)/10)},b);return}
+  if(a==="animo"){const v=+b.dataset.v;changeDay(d=>{d.animo=(+d.animo===v)?0:v},b);return}
   if(a==="tog"){changeDay(d=>{d[b.dataset.f]=!d[b.dataset.f]},b);return}
   if(a==="delmis"){e.stopPropagation();if(!missions[id])return;delete missions[id];render();delDoc("misiones/"+id);toast("Misión borrada","target");return}
   if(a==="mis"){changeDay(d=>{d.mis=Object.assign({},d.mis);d.mis[id]=!d.mis[id];if(d.mis[id])fresh.add(id)},b);return}
